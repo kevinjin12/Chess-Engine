@@ -15,7 +15,7 @@ def loadImages():
     pieces = ["wP", "wR", "wN", "wB", "wK", "wQ",
               "bP", "bR", "bN", "bB", "bK", "bQ"]
     for piece in pieces:
-        IMAGES[piece] = p.transform.scale(p.image.load("images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
+        IMAGES[piece] = p.transform.scale(p.image.load("../images/" + piece + ".png"), (SQ_SIZE, SQ_SIZE))
 
 
 def main():
@@ -34,11 +34,12 @@ def main():
     sqSelected = ()
     playerClicks = []
     gameOver = False
-    playerOne = False
-    playerTwo = True
+    playerOne = input("Is player one a human (True/False): ").strip().lower() == "true"
+    playerTwo = input("Is player two a human (True/False): ").strip().lower() == "true"
     AIThinking = False
     moveFinderProcess = None
     moveUndone = False
+
 
     while running:
         humanTurn = (gs.whiteToMove and playerOne) or (not gs.whiteToMove and playerTwo)
@@ -58,7 +59,6 @@ def main():
                         playerClicks.append(sqSelected)
                     if len(playerClicks) == 2 and humanTurn:
                         move = ChessEngine.Move(playerClicks[0], playerClicks[1], gs.board)
-                        print(move.getChessNotation())
                         for i in range(len(validMoves)):
                             if move == validMoves[i]:
                                 gs.makeMove(validMoves[i])
